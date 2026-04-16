@@ -31,3 +31,21 @@ st.dataframe(tables, width="stretch")
 
 st.subheader("Lineage preview")
 st.dataframe(lineage, width="stretch")
+
+st.subheader("Ask DataTrust Relay")
+
+user_question = st.text_area(
+    "Ask a question about your data incidents",
+    placeholder="Example: Why did the customers table fail?",
+    height=120
+)
+
+if st.button("Investigate", width="stretch"):
+    if user_question:
+        st.markdown("### Relay response")
+        st.info(
+            "Possible root cause: the selected issue appears linked to an upstream data sync or ETL delay. "
+            "Check the source job, refresh timestamps, and recent schema or null-rate changes first."
+        )
+    else:
+        st.warning("Please enter a question before investigating.")
