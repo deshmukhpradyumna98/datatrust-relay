@@ -6,9 +6,23 @@ st.set_page_config(page_title="DataTrust Relay", layout="wide")
 st.title("DataTrust Relay")
 st.write("AI investigation workspace for data quality incidents.")
 
-incidents = pd.read_csv("data/sample_incidents.csv")
-tables = pd.read_csv("data/sample_tables.csv")
-lineage = pd.read_csv("data/sample_lineage.csv")
+with st.sidebar:
+    st.header("Data source")
+    mode = st.radio("Choose mode", ["Demo data", "Upload incidents CSV"])
+
+if mode == "Demo data":
+    incidents = pd.read_csv("data/sample_incidents.csv")
+    tables = pd.read_csv("data/sample_tables.csv")
+    lineage = pd.read_csv("data/sample_lineage.csv")
+else:
+    uploaded_file = st.file_uploader("Upload incidents CSV", type=["csv"])
+    if uploaded_file is not None:
+        incidents = pd.read_csv(uploaded_file)
+        tables = pd.read_csv("data/sample_tables.csv")
+        lineage = pd.read_csv("data/sample_lineage.csv")
+    else:
+        st.warning("Please upload an incidents CSV file to continue.")
+        st.stop()
 
 severity_options = ["All"] + sorted(incidents["severity"].unique().tolist())
 selected_severity = st.selectbox("Filter by severity", severity_options)
