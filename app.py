@@ -87,3 +87,52 @@ if st.button("Investigate", width="stretch"):
                 "Possible root cause: the issue may be linked to an upstream data sync, ETL delay, or schema change. "
                 "Check refresh timestamps, anomaly history, and recent pipeline changes first."
             )
+st.subheader("Incident investigation details")
+
+for _, row in filtered_incidents.iterrows():
+    with st.expander(f"{row['incident_id']} - {row['table_name']} - {row['issue_type']}"):
+        st.markdown(f"""
+**Severity:** {row['severity']}  
+**Detected at:** {row['detected_at']}  
+**Summary:** {row['summary']}  
+**Suspected cause:** {row['suspected_cause']}  
+""")
+
+        st.markdown("**Recommended next checks**")
+        if row["issue_type"] == "Null spike":
+            st.markdown("""
+- Check the upstream source extract.
+- Compare null percentage vs previous load.
+- Validate mandatory fields in the source system.
+""")
+        elif row["issue_type"] == "Freshness failure":
+            st.markdown("""
+- Check the ETL schedule and job logs.
+- Confirm source file or API delivery time.
+- Verify downstream refresh dependencies.
+""")
+        elif row["issue_type"] == "Row count drop":
+            st.markdown("""
+- Compare source and target row counts.
+- Check filters introduced in the last deployment.
+- Review partial load or failed batch logs.
+""")
+        elif row["issue_type"] == "Schema drift":
+            st.markdown("""
+- Compare new values or columns against expected schema.
+- Review recent application releases.
+- Update validation and transformation rules if needed.
+""")
+        else:
+            st.markdown("""
+- Review the latest pipeline run logs.
+- Compare this incident with recent anomaly history.
+- Check upstream changes and downstream impact.
+""")
+
+        st.json({
+            "incident_id": row["incident_id"],
+            "table_name": row["table_name"],
+            "issue_type": row["issue_type"],
+            "severity": row["severity"]
+        }, expanded=False)
