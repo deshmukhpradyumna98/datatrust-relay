@@ -1,0 +1,8 @@
+upstream_table,downstream_table,transformation_name
+crm_customers,customers,customer_standardization
+erp_orders,orders,order_enrichment
+erp_invoices,invoices,invoice_cleanup
+gateway_payments,payments,payment_normalization
+pim_products,products,product_master_merge
+orders,finance_dashboard_orders,bi_reporting_model
+customers,sales_dashboard_customers,bi_reporting_model

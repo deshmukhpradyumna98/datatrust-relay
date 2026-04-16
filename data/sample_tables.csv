@@ -1,0 +1,6 @@
+table_name,domain,owner,source_system,refresh_frequency
+customers,Sales,Data Platform,CRM,Daily
+orders,Sales,Analytics Team,ERP,Hourly
+invoices,Finance,Finance Data,ERP,Daily
+payments,Finance,Finance Data,Payment Gateway,Hourly
+products,Supply,Master Data Team,PIM,Daily

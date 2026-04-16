@@ -1,0 +1,6 @@
+incident_id,table_name,issue_type,severity,detected_at,summary,suspected_cause
+INC-001,customers,Null spike,High,2026-04-15 08:30:00,Customer email null rate increased sharply,Upstream CRM sync issue
+INC-002,orders,Freshness failure,Medium,2026-04-15 09:10:00,Orders table not refreshed on schedule,ETL job delay
+INC-003,invoices,Row count drop,High,2026-04-15 10:00:00,Invoice row count dropped by 42 percent,Source extraction failure
+INC-004,payments,Schema drift,High,2026-04-15 11:15:00,New payment_status values detected,Application release changed enum values
+INC-005,products,Duplicate spike,Low,2026-04-15 12:00:00,Duplicate product IDs increased,Merge logic issue
